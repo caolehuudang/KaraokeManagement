@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +34,10 @@ public class User {
 	
 	@Column(name = "ROLE")
 	private String role;
+	
+	@ManyToOne
+	@JoinColumn(name = "FK_VIP_ID")
+	private Vip vip;
 
 	public Long getId() {
 		return id;
@@ -89,7 +95,16 @@ public class User {
 		this.role = role;
 	}
 
-	public User(Long id, String username, String password, String email, String image, String status, String role) {
+	public Vip getVip() {
+		return vip;
+	}
+
+	public void setVip(Vip vip) {
+		this.vip = vip;
+	}
+
+	public User(Long id, String username, String password, String email, String image, String status, String role,
+			Vip vip) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -98,6 +113,7 @@ public class User {
 		this.image = image;
 		this.status = status;
 		this.role = role;
+		this.vip = vip;
 	}
 
 	public User() {
