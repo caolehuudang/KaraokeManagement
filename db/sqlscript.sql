@@ -1,0 +1,2 @@
+username : adminkaraoke
+password: password
