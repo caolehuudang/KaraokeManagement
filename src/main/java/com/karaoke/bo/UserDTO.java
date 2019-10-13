@@ -1,4 +1,4 @@
-package com.karaoke.model;
+package com.karaoke.bo;
 
 public class UserDTO {
 	

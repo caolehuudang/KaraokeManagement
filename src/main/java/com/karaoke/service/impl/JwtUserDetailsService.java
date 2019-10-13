@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.karaoke.bo.UserDTO;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
-import com.karaoke.model.UserDTO;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.karaoke.bo.UserDTO;
 import com.karaoke.config.JwtTokenUtil;
 import com.karaoke.model.JwtRequest;
 import com.karaoke.model.JwtResponse;
-import com.karaoke.model.UserDTO;
 import com.karaoke.service.impl.JwtUserDetailsService;
 
 @RestController
