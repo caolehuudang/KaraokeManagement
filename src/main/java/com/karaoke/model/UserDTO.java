@@ -1,26 +1,11 @@
-	package com.karaoke.model;
+package com.karaoke.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "T_USER")
-public class User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "PK_ID")
-	private long id;
+public class UserDTO {
 	
-	@Column(name = "USER_NAME")
 	private String username;
 	
-	@Column(name = "PASSWORD")
-	@JsonIgnore
 	private String password;
 	
-	@Column(name="ROLE")
 	private String role;
 
 	public String getUsername() {
@@ -39,14 +24,6 @@ public class User {
 		this.password = password;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -54,5 +31,5 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
+	
 }
