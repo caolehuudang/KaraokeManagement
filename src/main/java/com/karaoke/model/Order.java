@@ -1,5 +1,6 @@
 package com.karaoke.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -12,9 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "T_ORDER")
-public class Order {
+public class Order implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +39,7 @@ public class Order {
 	private Double totalPrice;
 	
 	@OneToOne
+	@JsonIgnore
 	@JoinColumn(name = "FK_ID_USER")
 	private User user;
 	
@@ -97,4 +103,19 @@ public class Order {
 		this.room = room;
 	}
 
+	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, User user, Room room) {
+		super();
+		this.id = id;
+		this.start = start;
+		this.end = end;
+		this.name = name;
+		this.totalPrice = totalPrice;
+		this.user = user;
+		this.room = room;
+	}
+
+	public Order() {
+		super();
+	}
+	
 }

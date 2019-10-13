@@ -19,10 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "T_VIP")
 public class Vip implements Serializable{
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,7 +27,7 @@ public class Vip implements Serializable{
 	@Column(name = "PK_ID")
     private Long id;
 	
-	@Column(name = "LEVEL")
+	@Column(name = "LEVEL_USER")
 	private String level;
 	
 	@OneToMany(mappedBy = "vip")

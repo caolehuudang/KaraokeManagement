@@ -51,12 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.csrf().disable()
-				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
-				antMatchers("/admin").hasAuthority("ADMIN").
-				antMatchers("/getUserById").hasAuthority("ADMIN").
-				antMatchers("/customer").hasAnyAuthority("ADMIN","CUSTOMER").
+		httpSecurity.csrf().disable().
+				authorizeRequests().antMatchers("/customer").hasAnyAuthority("ADMIN","CUSTOMER").
+				antMatchers("/authenticate", "/register").permitAll().
+				antMatchers("/admin","/getUserById", "/getAllUser", "/updateUser", "/updateVip",
+						"/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom").
+				hasAuthority("ADMIN").
+				antMatchers("/getAllVip", "/findVipById", "/getAllCategory",
+						"/getAllRoom", "/changeStatusRoom").permitAll().
+				
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

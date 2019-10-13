@@ -104,4 +104,23 @@ public class User implements Serializable{
 		this.vip = vip;
 	}
 
+	public User(Long id, String username, String password, String email, String image, String status, String role,
+			Vip vip) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.image = image;
+		this.status = status;
+		this.role = role;
+		this.vip = vip;
+	}
+
+	public User() {
+		super();
+	}
+	
+	
+
 }

@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService{
 	UserDao userDao;
 
 	@Override
-	public Optional<User> findById(Long id) {
-		return userDao.findById(id);
+	public User findById(Long id) {
+		return userDao.findById(id).get();
 	}
 
 	@Override
@@ -29,7 +29,17 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User updateUser(User user) {
-		return null;
+		
+		User userOld = userDao.findById(user.getId()).get();
+		
+		userOld.setEmail(user.getEmail());
+		userOld.setStatus(user.getStatus());
+		userOld.setImage(user.getImage());
+		userOld.setVip(user.getVip());
+		
+		userDao.save(userOld);
+
+		return userOld;
 	}
 
 }
