@@ -2,16 +2,20 @@ package com.karaoke.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "T_USER")
-public class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PK_ID")
-	private long id;
+	private Long id;
 
 	@Column(name = "USER_NAME")
 	private String username;
@@ -36,11 +40,11 @@ public class User {
 	@JoinColumn(name = "FK_VIP_ID")
 	private Vip vip;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

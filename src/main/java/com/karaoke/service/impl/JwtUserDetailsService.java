@@ -39,13 +39,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 				grantedAuthorities);
 	}
 	
-
-//    public static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-//        String userRoles = user.getRole();
-//        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
-//        return authorities;
-//    }
-    
 	public User save(UserDTO user) {
 		User newUser = new User();
 		newUser.setUsername(user.getUsername());

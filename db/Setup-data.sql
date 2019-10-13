@@ -1,0 +1,7 @@
+-- INSERT TABLE VIP --
+
+INSERT INTO "T_VIP" (PK_ID, "LEVEL") values(1,'SILVER');
+
+INSERT INTO "T_VIP" (PK_ID, "LEVEL") values(2,'GOLD');
+
+INSERT INTO "T_VIP" (PK_ID, "LEVEL") values(3,'PLATINUM');
