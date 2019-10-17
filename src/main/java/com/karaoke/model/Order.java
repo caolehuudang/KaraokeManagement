@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -26,10 +27,10 @@ public class Order implements Serializable{
 	@Column(name = "PK_ID")
     private Long id;
 	
-	@Column(name = "START")
+	@Column(name = "START_TIME")
 	private Timestamp start;
 	
-	@Column(name = "END")
+	@Column(name = "END_TIME")
 	private Timestamp end;
 	
 	@Column(name = "NAME")
@@ -39,12 +40,13 @@ public class Order implements Serializable{
 	private Double totalPrice;
 	
 	@OneToOne
-	@JsonIgnore
 	@JoinColumn(name = "FK_ID_USER")
+	@JsonBackReference
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_ID_ROOM")
+	@JsonBackReference
 	private Room room;
 
 	public Long getId() {

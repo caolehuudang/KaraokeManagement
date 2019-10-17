@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.karaoke.bo.UserDTO;
+import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
 
@@ -40,10 +41,15 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 	
 	public User save(UserDTO user) {
+		
 		User newUser = new User();
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		newUser.setRole(user.getRole());
+		newUser.setEmail(user.getEmail());
+		newUser.setFullName(user.getFullName());
+		newUser.setStatus(Contants.ACTIVE);
+		
 		return userDao.save(newUser);
 	}
 }

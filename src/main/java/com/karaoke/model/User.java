@@ -26,6 +26,9 @@ public class User implements Serializable{
 
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name="FULLNAME")
+	private String fullName;
 
 	@Column(name = "IMAGE")
 	private String image;
@@ -104,13 +107,22 @@ public class User implements Serializable{
 		this.vip = vip;
 	}
 
-	public User(Long id, String username, String password, String email, String image, String status, String role,
-			Vip vip) {
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public User(Long id, String username, String password, String email, String fullName, String image, String status,
+			String role, Vip vip) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.fullName = fullName;
 		this.image = image;
 		this.status = status;
 		this.role = role;
@@ -120,7 +132,5 @@ public class User implements Serializable{
 	public User() {
 		super();
 	}
-	
-	
 
 }

@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "T_ITEM")
 public class Item {
@@ -35,10 +38,12 @@ public class Item {
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_ID_CATEGORY")
+	@JsonBackReference
 	private Category category;
 
 	@OneToMany(mappedBy = "item")
 	@Cascade(CascadeType.ALL)
+	@JsonIgnore
 	private List<OrderItem> orderItems;
 
 	public Long getId() {

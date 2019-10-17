@@ -24,6 +24,7 @@ public class CategoryController {
 	
 	@PostMapping(value = "/addNewCategory", produces = "application/json; charset=UTF-8")
 	public Category addNewCategory(@RequestBody Category category) {
+		
 		return categoryService.addNewCategory(category);
 	}
 	
