@@ -19,9 +19,10 @@ public class Room {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "PK_ID")
     private Long id;
 	
-	@Column(name = "NUMBER")
+	@Column(name = "NUMBER_ROOM")
 	private int number;
 	
 	@Column(name = "CAPACITY")

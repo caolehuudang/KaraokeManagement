@@ -7,7 +7,13 @@ public class UserDTO {
 	private String password;
 	
 	private String role;
-
+	
+	private String email;
+	
+	private String status;
+	
+	private String fullName;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -31,5 +37,29 @@ public class UserDTO {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
 }

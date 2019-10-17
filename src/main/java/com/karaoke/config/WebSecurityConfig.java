@@ -55,10 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				authorizeRequests().antMatchers("/customer").hasAnyAuthority("ADMIN","CUSTOMER").
 				antMatchers("/authenticate", "/register").permitAll().
 				antMatchers("/admin","/getUserById", "/getAllUser", "/updateUser", "/updateVip",
-						"/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom").
+						"/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
+						"/addNewItem", "/updateItem").
 				hasAuthority("ADMIN").
 				antMatchers("/getAllVip", "/findVipById", "/getAllCategory",
-						"/getAllRoom", "/changeStatusRoom").permitAll().
+						"/getAllRoom", "/changeStatusRoom", "/getAllItem",
+						"/getAllOrder", "/addNewOrder", "/updateOrder").permitAll().
 				
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
