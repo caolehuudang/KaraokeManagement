@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.karaoke.bo.TotalMoneyInMonth;
 import com.karaoke.model.Order;
 import com.karaoke.service.OrderService;
 
@@ -17,8 +19,8 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
-	@GetMapping("/getAllOrder")
-	public List<Order> getAllOrder(){
+	@GetMapping("/getAllOrders")
+	public List<Order> getAllOrders(){
 		return orderService.getAllOrder();
 	}
 	
@@ -32,5 +34,14 @@ public class OrderController {
 		return orderService.updateOrder(order);
 	}
 	
+	@PostMapping(value = "/getOrderByName", produces = "application/json; charset=UTF-8")
+	public List<Order> getOrderByName(@RequestParam(value = "name", required = true) String name){
+		return orderService.getOrderByName(name);
+	}
+	
+	@GetMapping("/getTotalMonth")
+	public TotalMoneyInMonth getTotalMonth() {
+		return orderService.getTotalMonth(10);
+	}
 	
 }

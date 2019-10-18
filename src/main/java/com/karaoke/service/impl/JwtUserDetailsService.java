@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import com.karaoke.bo.UserDTO;
 import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
+import com.karaoke.service.SendMailSevice;
+import com.karaoke.service.UserService;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -25,6 +29,12 @@ public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
+	
+	@Autowired
+	SendMailSevice sendMailSevice;
+	
+	@Autowired
+	JavaMailSender javaMailSender;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -32,6 +42,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
+		if(user.getStatus().equals(Contants.DE_ACTIVE)) {
+			throw new UsernameNotFoundException("User De-active: " + username);
+		}
+		
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		
 		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
@@ -48,8 +62,12 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setRole(user.getRole());
 		newUser.setEmail(user.getEmail());
 		newUser.setFullName(user.getFullName());
-		newUser.setStatus(Contants.ACTIVE);
+		
+		sendMailSevice.sendEmail(user.getEmail(), "", "", user.getUsername());
+		
+		newUser.setStatus(Contants.DE_ACTIVE);
 		
 		return userDao.save(newUser);
 	}
+
 }

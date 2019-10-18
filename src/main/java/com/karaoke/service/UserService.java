@@ -8,6 +8,10 @@ public interface UserService {
 
 	User findById(Long id);
 	
+	User findByUsername(String username);
+	
+	User activeAccount(String username);
+	
 	List<User> getAllUser();
 	
 	User updateUser(User user);

@@ -2,16 +2,22 @@ package com.karaoke.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,14 +47,16 @@ public class Order implements Serializable{
 	
 	@OneToOne
 	@JoinColumn(name = "FK_ID_USER")
-	@JsonBackReference
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_ID_ROOM")
-	@JsonBackReference
 	private Room room;
-
+	
+	@OneToMany(mappedBy = "order",fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	public List<OrderItem> orderItems;
+	
 	public Long getId() {
 		return id;
 	}
@@ -103,6 +111,14 @@ public class Order implements Serializable{
 
 	public void setRoom(Room room) {
 		this.room = room;
+	}
+
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
 	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, User user, Room room) {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "T_ROOM")
@@ -37,8 +40,9 @@ public class Room {
 	@Column(name = "IMAGE")
 	private String image;
 	
-	@OneToMany(mappedBy = "room")
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
+	@JsonIgnore
 	private List<Order> orders;
 
 	public Long getId() {

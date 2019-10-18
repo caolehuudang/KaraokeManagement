@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Category {
 	@Column(name = "STATUS")
 	private String status;
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	private List<Item> items;
 

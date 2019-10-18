@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.karaoke.bo.TotalMoneyInMonth;
 import com.karaoke.dao.OrderDao;
 import com.karaoke.model.Order;
 import com.karaoke.service.OrderService;
@@ -17,7 +18,14 @@ public class OrderSeviceImpl implements OrderService{
 
 	@Override
 	public List<Order> getAllOrder() {
-		return orderDao.findAll();
+		List<Order> list =  orderDao.findAll();
+		list.forEach(item ->{
+			item.getRoom().setOrders(null);
+			item.getOrderItems().forEach(item2 ->{
+				item2.setOrder(null);
+			});
+		});
+		return list;
 	}
 
 	@Override
@@ -51,9 +59,26 @@ public class OrderSeviceImpl implements OrderService{
 		return orderDao.getOrderByName(name);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Double getTotalMonth() {
-		return null;
+	public TotalMoneyInMonth getTotalMonth(int month) {
+		List<Order> list =  orderDao.findAll();
+		TotalMoneyInMonth totalInMonth = new TotalMoneyInMonth();
+		//Order or = list.stream().filter(item-> (8 == item.getStart().getHours())).findAny().orElse(null);
+		Double total = 0.0;
+		for(Order or : list) {
+			if(or.getStart().getMonth() + 1 == 10) {
+				total += or.getTotalPrice();
+			}
+		}
+		
+		totalInMonth.setMonth(month);
+		
+		totalInMonth.setTotal(total);
+		
+		totalInMonth.setAverage(total / list.size());
+		
+		return totalInMonth;
 	}
 
 	@Override
