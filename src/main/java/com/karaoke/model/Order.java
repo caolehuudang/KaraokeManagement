@@ -45,6 +45,9 @@ public class Order implements Serializable{
 	@Column(name = "TOTAL_PRICE")
 	private Double totalPrice;
 	
+	@Column(name = "STATUS")
+	private String status;
+	
 	@OneToOne
 	@JoinColumn(name = "FK_ID_USER")
 	private User user;
@@ -96,6 +99,15 @@ public class Order implements Serializable{
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public User getUser() {
 		return user;
@@ -121,15 +133,19 @@ public class Order implements Serializable{
 		this.orderItems = orderItems;
 	}
 
-	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, User user, Room room) {
+
+	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, String status, User user,
+			Room room, List<OrderItem> orderItems) {
 		super();
 		this.id = id;
 		this.start = start;
 		this.end = end;
 		this.name = name;
 		this.totalPrice = totalPrice;
+		this.status = status;
 		this.user = user;
 		this.room = room;
+		this.orderItems = orderItems;
 	}
 
 	public Order() {

@@ -1,10 +1,15 @@
 package com.karaoke.service.impl;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.karaoke.common.Contants;
 import com.karaoke.service.SendMailSevice;
 
 @Service
@@ -20,22 +25,28 @@ public class SendMailServiceImpl implements SendMailSevice{
 
         msg.setSubject("Hello My Friend");
         msg.setText("My name is Dang");
-        System.out.println("sending..................");
         javaMailSender.send(msg);
 	}
 
 	@Override
-	public void sendEmail(String receiver, String title, String content, String username) {
-		SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(receiver);
-
-        msg.setSubject("Confirm create accout");
-        
-        msg.setText("To confirm your account, please click here : "
-        		  +"http://localhost:9998/confirm-account?username=" + username );
-        		  
-        System.out.println("sending..................");
-        
+	public void sendEmail(String receiver, String title, String fullName, String username) throws MessagingException {
+		
+		MimeMessage msg = javaMailSender.createMimeMessage();
+		
+		MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+		
+		helper.setTo(receiver);
+		
+		helper.setSubject("Confirm create accout");
+		
+		helper.setText("<h1>Dear "+ fullName +",</h1>"
+						+"<h2>Welcome to Karaoke Lala</h2>"
+						+ "<span>Thank you for using our service, </span>"
+						+ "<span>"
+						+ "<a href=\""+Contants.URL_SERVER+"/confirm-account?username="+ username +"\">"
+						+ " Click here for active account, Please! "
+						+ "</a>"
+						+ "</span>", true);
         javaMailSender.send(msg);
 		
 	}

@@ -31,6 +31,12 @@ public class Vip implements Serializable{
 	@Column(name = "LEVEL_USER")
 	private String level;
 	
+	@Column(name = "TOTAL")
+	private Double total;
+	
+	@Column(name = "PERCENT_DISCOUNT")
+	private int percentDiscount;
+	
 	@OneToMany(mappedBy = "vip",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	@JsonIgnore
@@ -60,10 +66,28 @@ public class Vip implements Serializable{
 		this.users = users;
 	}
 
-	public Vip(Long id, String level, List<User> users) {
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public int getPercentDiscount() {
+		return percentDiscount;
+	}
+
+	public void setPercentDiscount(int percentDiscount) {
+		this.percentDiscount = percentDiscount;
+	}
+	
+	public Vip(Long id, String level, Double total, int percentDiscount, List<User> users) {
 		super();
 		this.id = id;
 		this.level = level;
+		this.total = total;
+		this.percentDiscount = percentDiscount;
 		this.users = users;
 	}
 

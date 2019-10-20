@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				antMatchers("/admin","/getUserById", "/getAllUser", "/updateUser", "/updateVip",
 						"/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
-						"/addNewItem", "/updateItem").hasAuthority(Contants.ROLE_ADMIN).
+						"/addNewItem", "/updateItem", "/pay").hasAuthority(Contants.ROLE_ADMIN).
 				
 				antMatchers("/getAllVip", "/findVipById", "/getAllCategory",
 						"/getAllRoom", "/changeStatusRoom", "/getAllItem",

@@ -3,8 +3,9 @@ package com.karaoke.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +20,6 @@ import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
 import com.karaoke.service.SendMailSevice;
-import com.karaoke.service.UserService;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -54,16 +54,17 @@ public class JwtUserDetailsService implements UserDetailsService {
 				grantedAuthorities);
 	}
 	
-	public User save(UserDTO user) {
+	public User save(UserDTO user) throws MessagingException {
 		
 		User newUser = new User();
+		
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		newUser.setRole(user.getRole());
 		newUser.setEmail(user.getEmail());
 		newUser.setFullName(user.getFullName());
 		
-		sendMailSevice.sendEmail(user.getEmail(), "", "", user.getUsername());
+		sendMailSevice.sendEmail(user.getEmail(), "", user.getFullName(), user.getUsername());
 		
 		newUser.setStatus(Contants.DE_ACTIVE);
 		

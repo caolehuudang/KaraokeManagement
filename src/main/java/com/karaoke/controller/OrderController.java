@@ -44,4 +44,9 @@ public class OrderController {
 		return orderService.getTotalMonth(10);
 	}
 	
+	@PostMapping(value = "/pay", produces = "application/json; charset=UTF-8")
+	public Order pay(@RequestParam(value = "id", required = true) Long id) {
+		return orderService.pay(id);
+	}
+	
 }
