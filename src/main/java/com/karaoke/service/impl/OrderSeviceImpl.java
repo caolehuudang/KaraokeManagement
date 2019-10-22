@@ -10,25 +10,30 @@ import com.karaoke.bo.TotalMoneyInMonth;
 import com.karaoke.common.Contants;
 import com.karaoke.dao.OrderDao;
 import com.karaoke.dao.UserDao;
+import com.karaoke.dao.VipDao;
 import com.karaoke.model.Order;
 import com.karaoke.model.User;
+import com.karaoke.model.Vip;
 import com.karaoke.service.OrderService;
 
 @Service
-public class OrderSeviceImpl implements OrderService{
-	
+public class OrderSeviceImpl implements OrderService {
+
 	@Autowired
 	OrderDao orderDao;
-	
+
 	@Autowired
 	UserDao userDao;
 
+	@Autowired
+	VipDao vipDao;
+
 	@Override
 	public List<Order> getAllOrder() {
-		List<Order> list =  orderDao.findAll();
-		list.forEach(item ->{
+		List<Order> list = orderDao.findAll();
+		list.forEach(item -> {
 			item.getRoom().setOrders(null);
-			item.getOrderItems().forEach(item2 ->{
+			item.getOrderItems().forEach(item2 -> {
 				item2.setOrder(null);
 			});
 		});
@@ -48,16 +53,16 @@ public class OrderSeviceImpl implements OrderService{
 	@Override
 	public Order updateOrder(Order order) {
 		Order orderOld = getOrderById(order.getId());
-		
+
 		orderOld.setStart(order.getStart());
 		orderOld.setEnd(order.getEnd());
 		orderOld.setName(order.getName());
 		orderOld.setRoom(order.getRoom());
 		orderOld.setUser(order.getUser());
 		orderOld.setTotalPrice(order.getTotalPrice());
-		
+
 		orderDao.save(orderOld);
-		
+
 		return orderOld;
 	}
 
@@ -69,55 +74,47 @@ public class OrderSeviceImpl implements OrderService{
 	@SuppressWarnings("deprecation")
 	@Override
 	public TotalMoneyInMonth getTotalMonth(int month) {
-		List<Order> list =  orderDao.findAll();
+		List<Order> list = orderDao.findAll();
 		TotalMoneyInMonth totalInMonth = new TotalMoneyInMonth();
-		//Order or = list.stream().filter(item-> (8 == item.getStart().getHours())).findAny().orElse(null);
+		// Order or = list.stream().filter(item-> (8 ==
+		// item.getStart().getHours())).findAny().orElse(null);
 		Double total = 0.0;
-		for(Order or : list) {
-			if(or.getStart().getMonth() + 1 == 10) {
+		for (Order or : list) {
+			if (or.getStart().getMonth() + 1 == 10) {
 				total += or.getTotalPrice();
 			}
 		}
-		
+
 		totalInMonth.setMonth(month);
-		
+
 		totalInMonth.setTotal(total);
-		
+
 		totalInMonth.setAverage(total / list.size());
-		
+
 		return totalInMonth;
 	}
 
 	@Override
-	public String Calculator() {
-		return null;
-	}
+	public Order pay(Order or) {
 
-	@Override
-	public Order pay(Long id) {
-		
-		Order order = orderDao.findById(id).get();
-		
-		order.getOrderItems().forEach(item ->{
+		Order order = orderDao.findById(or.getId()).get();
+
+		order.getOrderItems().forEach(item -> {
 			item.setOrder(null);
 		});
-		
-		List<Order> listOrder = new ArrayList<Order>();
-		
-		if(order.getUser().getId() != null) {
-			
-			User user = userDao.findById(order.getUser().getId()).get();
-			
-			//order1 = getOrderByUserIdAndStatus(order.getUser().getId(), Contants.ACTIVE);
-			
-			listOrder = orderDao.getAllOrderByUserId(user.getId());
-			
+
+		if (order.getUser().getId() != null) {
+
+			upLevelCustomer(order.getUser().getId());
+
 		}
 		
-//		Order orderOld = orderDao.findById(order.getId()).get();
+		order.setEnd(or.getEnd());
+		order.setStatus(Contants.DE_ACTIVE);
+		order.setTotalPrice(or.getTotalPrice());
 
-		
-		return listOrder.get(0);
+		orderDao.save(order);
+		return order;
 	}
 
 	@Override
@@ -138,6 +135,64 @@ public class OrderSeviceImpl implements OrderService{
 	@Override
 	public List<Order> getAllOrderByUserId(Long id) {
 		return orderDao.getAllOrderByUserId(id);
+	}
+
+	@Override
+	public List<Order> getOrderByUserId(Long id) {
+		return orderDao.getAllOrderByUserId(id);
+	}
+
+	@Override
+	public void upLevelCustomer(Long id) {
+		
+		User user = userDao.findById(id).get();
+		
+		List<Order> payHistory = orderDao.getAllOrderByUserId(id);
+
+		payHistory.forEach(item -> {
+			item.getOrderItems().forEach(item2 -> {
+				item2.setOrder(null);
+			});
+		});
+
+		List<Order> listPaid = new ArrayList<Order>();
+
+		payHistory.forEach(item -> {
+			if (item.getStatus().equals(Contants.DE_ACTIVE)) {
+				listPaid.add(item);
+			}
+		});
+
+		Double totalMoney = 0.0;
+
+		for (Order or : payHistory) {
+			totalMoney += or.getTotalPrice();
+		}
+
+		List<Vip> listVip = vipDao.findAllByOrderByTotalAsc();
+
+		int j = 0;
+
+		for (int i = 0; i < listVip.size(); i++) {
+
+			if (totalMoney.intValue() >= listVip.get(i).getTotal().intValue()) {
+				j = i;
+				if (i == listVip.size() - 1) {
+					//msg = listVip.get(j).getLevel();
+					user.setVip(listVip.get(j));
+				}
+				continue;
+			} else {
+				if (i < 1) {
+					break;
+				} else {
+					//msg = listVip.get(j).getLevel();
+					user.setVip(listVip.get(j));
+				}
+			}
+		}
+
+		userDao.save(user);
 	}
 
 }

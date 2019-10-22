@@ -15,6 +15,8 @@ public interface OrderService {
 	
 	Order getOrderByUserIdAndStatus(Long id, String status);
 	
+	List<Order> getOrderByUserId(Long id);
+	
 	Order addNewOrder(Order order);
 	
 	Order updateOrder(Order order);
@@ -23,12 +25,12 @@ public interface OrderService {
 	
 	TotalMoneyInMonth getTotalMonth(int month);
 	
-	Order pay(Long id);
+	Order pay(Order order);
 	
 	List<Order> getAllOrderByUserId(Long id);
 	
 	Double getCalculatorTotalUser(List<Order> order);
 	
-	String Calculator();
+	void upLevelCustomer(Long id);
 	
 }

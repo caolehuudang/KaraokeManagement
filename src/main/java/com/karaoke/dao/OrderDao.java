@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.karaoke.model.Order;
-import com.karaoke.model.User;
 
 @Repository
 public interface OrderDao extends JpaRepository<Order, Long>{
@@ -19,5 +18,4 @@ public interface OrderDao extends JpaRepository<Order, Long>{
 	
 	List<Order> getAllOrderByUserId(Long id);
 	
-	Order getOrderByUser(Long id);
 }

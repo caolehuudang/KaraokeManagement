@@ -45,8 +45,8 @@ public class OrderController {
 	}
 	
 	@PostMapping(value = "/pay", produces = "application/json; charset=UTF-8")
-	public Order pay(@RequestParam(value = "id", required = true) Long id) {
-		return orderService.pay(id);
+	public Order pay(@RequestBody Order order) {
+		return orderService.pay(order);
 	}
 	
 }
