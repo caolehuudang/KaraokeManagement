@@ -2,6 +2,7 @@ package com.karaoke.service;
 
 import java.util.List;
 
+import com.karaoke.bo.TotalMoneyInMonth;
 import com.karaoke.model.Order;
 
 public interface OrderService {
@@ -10,14 +11,26 @@ public interface OrderService {
 	
 	Order getOrderById(Long id);
 	
+	Order getOrderByIdAndStatus(Long id, String status);
+	
+	Order getOrderByUserIdAndStatus(Long id, String status);
+	
+	List<Order> getOrderByUserId(Long id);
+	
 	Order addNewOrder(Order order);
 	
 	Order updateOrder(Order order);
 	
 	List<Order> getOrderByName(String name);
 	
-	Double getTotalMonth();
+	TotalMoneyInMonth getTotalMonth(int month);
 	
-	String Calculator();
+	Order pay(Order order);
+	
+	List<Order> getAllOrderByUserId(Long id);
+	
+	Double getCalculatorTotalUser(List<Order> order);
+	
+	void upLevelCustomer(Long id);
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,13 @@ public class Vip implements Serializable{
 	@Column(name = "LEVEL_USER")
 	private String level;
 	
-	@OneToMany(mappedBy = "vip")
+	@Column(name = "TOTAL")
+	private Double total;
+	
+	@Column(name = "PERCENT_DISCOUNT")
+	private int percentDiscount;
+	
+	@OneToMany(mappedBy = "vip",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	@JsonIgnore
 	private List<User> users;
@@ -59,10 +66,28 @@ public class Vip implements Serializable{
 		this.users = users;
 	}
 
-	public Vip(Long id, String level, List<User> users) {
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
+
+	public int getPercentDiscount() {
+		return percentDiscount;
+	}
+
+	public void setPercentDiscount(int percentDiscount) {
+		this.percentDiscount = percentDiscount;
+	}
+	
+	public Vip(Long id, String level, Double total, int percentDiscount, List<User> users) {
 		super();
 		this.id = id;
 		this.level = level;
+		this.total = total;
+		this.percentDiscount = percentDiscount;
 		this.users = users;
 	}
 

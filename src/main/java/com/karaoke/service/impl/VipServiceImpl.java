@@ -23,7 +23,11 @@ public class VipServiceImpl implements VipService{
 	@Override
 	public Vip updateVip(Vip vip) {
 		Vip vipOld = findById(vip.getId());
+		
 		vipOld.setLevel(vip.getLevel());
+		vipOld.setTotal(vip.getTotal());
+		vipOld.setPercentDiscount(vip.getPercentDiscount());
+		
 		vipDao.save(vipOld);
 		return vipOld;
 	}

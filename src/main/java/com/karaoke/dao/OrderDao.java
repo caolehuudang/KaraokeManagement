@@ -11,4 +11,11 @@ import com.karaoke.model.Order;
 public interface OrderDao extends JpaRepository<Order, Long>{
 
 	List<Order> getOrderByName(String name);
+	
+	Order getOrderByIdAndStatus(Long id, String status);
+	
+	Order getOrderByUserIdAndStatus(Long id, String status);
+	
+	List<Order> getAllOrderByUserId(Long id);
+	
 }

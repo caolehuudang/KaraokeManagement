@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.karaoke.bo.AccountSuccessfull;
 import com.karaoke.model.User;
+import com.karaoke.service.SendMailSevice;
 import com.karaoke.service.UserService;
 
 @RestController
@@ -19,6 +21,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	SendMailSevice sendMailSevice;
 
 	@PostMapping("/getUserById")
 	public User findById(@RequestParam(value = "id", required = false) Long id) {
@@ -33,6 +38,18 @@ public class UserController {
 	@PostMapping(value = "/updateUser", produces = "application/json; charset=UTF-8")
 	public User updateUser(@RequestBody User user) {
 		return userService.updateUser(user);
-	} 
+	}
+	
+	
+	
+	@GetMapping("/confirm-account")
+	public AccountSuccessfull confirmAccount(@RequestParam("username") String username) {
+		User user = userService.activeAccount(username);
+		if(user != null) {
+			return new AccountSuccessfull("successfull", true);
+		}else {
+			return new AccountSuccessfull("fail", false);
+		}
+	}
 	
 }

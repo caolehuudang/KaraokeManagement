@@ -2,16 +2,22 @@ package com.karaoke.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,16 +45,21 @@ public class Order implements Serializable{
 	@Column(name = "TOTAL_PRICE")
 	private Double totalPrice;
 	
+	@Column(name = "STATUS")
+	private String status;
+	
 	@OneToOne
 	@JoinColumn(name = "FK_ID_USER")
-	@JsonBackReference
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_ID_ROOM")
-	@JsonBackReference
 	private Room room;
-
+	
+	@OneToMany(mappedBy = "order",fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	public List<OrderItem> orderItems;
+	
 	public Long getId() {
 		return id;
 	}
@@ -88,6 +99,15 @@ public class Order implements Serializable{
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public User getUser() {
 		return user;
@@ -105,15 +125,27 @@ public class Order implements Serializable{
 		this.room = room;
 	}
 
-	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, User user, Room room) {
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
+
+	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, String status, User user,
+			Room room, List<OrderItem> orderItems) {
 		super();
 		this.id = id;
 		this.start = start;
 		this.end = end;
 		this.name = name;
 		this.totalPrice = totalPrice;
+		this.status = status;
 		this.user = user;
 		this.room = room;
+		this.orderItems = orderItems;
 	}
 
 	public Order() {

@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.karaoke.common.Contants;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -52,20 +54,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		
 		httpSecurity.csrf().disable().
-				authorizeRequests().antMatchers("/customer").hasAnyAuthority("ADMIN","CUSTOMER").
+				authorizeRequests().antMatchers("/customer").hasAnyAuthority(Contants.ROLE_ADMIN,
+						Contants.ROLE_CUSTOMER).
 				antMatchers("/authenticate", "/register").permitAll().
+				
 				antMatchers("/admin","/getUserById", "/getAllUser", "/updateUser", "/updateVip",
 						"/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
-						"/addNewItem", "/updateItem").
-				hasAuthority("ADMIN").
+						"/addNewItem", "/updateItem", "/pay").hasAuthority(Contants.ROLE_ADMIN).
+				
 				antMatchers("/getAllVip", "/findVipById", "/getAllCategory",
 						"/getAllRoom", "/changeStatusRoom", "/getAllItem",
-						"/getAllOrder", "/addNewOrder", "/updateOrder").permitAll().
+						"/getAllOrders", "/addNewOrder", "/updateOrder",
+						"/getOrderByName", "/getTotalMonth", "/getAllOrderItem",
+						"/addNewOrderItem", "/updateOrderItem",
+						"/confirm-account").permitAll().
 				
-				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
-				// make sure we use stateless session; session won't be used to
-				// store user's state.
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

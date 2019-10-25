@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.karaoke.bo.AccountSuccessfull;
+import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
 import com.karaoke.service.UserService;
@@ -40,6 +42,20 @@ public class UserServiceImpl implements UserService{
 		userDao.save(userOld);
 
 		return userOld;
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return userDao.findByUsername(username);
+	}
+
+	@Override
+	public User activeAccount(String username) {
+		User user = findByUsername(username);
+		user.setStatus(Contants.ACTIVE);
+		userDao.save(user);
+		
+		return user;
 	}
 
 }
