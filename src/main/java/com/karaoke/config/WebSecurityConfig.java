@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import com.karaoke.common.Contants;
 
@@ -62,16 +63,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
 						"/addNewItem", "/updateItem", "/pay").hasAuthority(Contants.ROLE_ADMIN).
 				
-				antMatchers("/getAllVip", "/findVipById", "/getAllCategory",
+				antMatchers("/", "/getAllVip", "/findVipById", "/getAllCategory",
 						"/getAllRoom", "/changeStatusRoom", "/getAllItem",
 						"/getAllOrders", "/addNewOrder", "/updateOrder",
 						"/getOrderByName", "/getTotalMonth", "/getAllOrderItem",
 						"/addNewOrderItem", "/updateOrderItem",
-						"/confirm-account").permitAll().
-				
+						"/confirm-account", "/topic/public", "/topic/**", "/ws/**",
+						"/chat.addUser", "/chat.sendMessage").permitAll().
 				anyRequest().authenticated().and().
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().headers()
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "*"))
+	            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST, GET"))
+	            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Max-Age", "3600"))
+	            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
+	            .addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization"))
+				;
 
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
