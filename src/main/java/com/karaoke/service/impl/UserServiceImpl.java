@@ -1,12 +1,10 @@
 package com.karaoke.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.karaoke.bo.AccountSuccessfull;
 import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
