@@ -22,8 +22,8 @@ import com.karaoke.model.JwtRequest;
 import com.karaoke.model.JwtResponse;
 import com.karaoke.service.impl.JwtUserDetailsService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@CrossOrigin
 public class JwtAuthenticationController {
 
 	@Autowired
@@ -35,6 +35,8 @@ public class JwtAuthenticationController {
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
 
+	
+	@CrossOrigin
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
