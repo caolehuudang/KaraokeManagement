@@ -11,15 +11,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.karaoke.bo.UserDTO;
 import com.karaoke.config.JwtTokenUtil;
+import com.karaoke.dao.UserDao;
 import com.karaoke.model.JwtRequest;
 import com.karaoke.model.JwtResponse;
+import com.karaoke.model.User;
 import com.karaoke.service.impl.JwtUserDetailsService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -34,6 +38,9 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+	@Autowired
+	UserDao userDao;
 
 	
 	@CrossOrigin
@@ -47,8 +54,28 @@ public class JwtAuthenticationController {
 				userDetails.getAuthorities());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		
+		User user = userDao.findByUsername(authenticationRequest.getUsername());
 
-		return ResponseEntity.ok(new JwtResponse(token, userDetails.getAuthorities().iterator().next().toString()));
+		return ResponseEntity.ok(new JwtResponse(token, 
+				userDetails.getAuthorities().iterator().next().toString(),
+				user.getFullName()));
+	}
+	
+	@CrossOrigin
+	@PostMapping("/loginViaToken")
+	public UserDTO loginViaToken(@RequestHeader(value = "Authorization") String authorization) {
+		
+		 UserDetails userDetails = userDetailsService
+					.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(authorization.substring(7)));
+		 
+		UserDTO userDto = new UserDTO();
+		User user = userDao.findByUsername(userDetails.getUsername());
+		userDto.setUsername(user.getUsername());
+		userDto.setFullName(user.getFullName());
+		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());
+		
+		return userDto;
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
