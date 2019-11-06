@@ -15,4 +15,6 @@ public interface Contants {
 	
 	public static final String URL_SERVER = "http://localhost:9998";
 	
+	public static final String USER_EXISTED = "USER_EXISTED";
+	
 }

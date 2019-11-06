@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.karaoke.bo.UserDTO;
+import com.karaoke.common.Contants;
 import com.karaoke.config.JwtTokenUtil;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.JwtRequest;
@@ -80,7 +81,15 @@ public class JwtAuthenticationController {
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-		return ResponseEntity.ok(userDetailsService.save(user));
+		
+		User userExist = userDao.findByUsername(user.getUsername().strip());
+		
+		if(userExist != null) {
+			return ResponseEntity.ok(Contants.USER_EXISTED);
+		}else {
+			return ResponseEntity.ok(userDetailsService.save(user));
+		}
+		
 	}
 
 	private void authenticate(String username, String password, Collection<? extends GrantedAuthority> collection) throws Exception {

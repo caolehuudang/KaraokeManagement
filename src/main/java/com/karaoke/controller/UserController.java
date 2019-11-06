@@ -1,6 +1,9 @@
 package com.karaoke.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.karaoke.bo.AccountSuccessfull;
 import com.karaoke.model.User;
 import com.karaoke.service.SendMailSevice;
 import com.karaoke.service.UserService;
@@ -43,12 +45,12 @@ public class UserController {
 	
 	
 	@GetMapping("/confirm-account")
-	public AccountSuccessfull confirmAccount(@RequestParam("username") String username) {
+	public void confirmAccount(@RequestParam("username") String username, HttpServletResponse response) throws IOException {
 		User user = userService.activeAccount(username);
 		if(user != null) {
-			return new AccountSuccessfull("successfull", true);
+			 response.sendRedirect("http://localhost:3000");
 		}else {
-			return new AccountSuccessfull("fail", false);
+			 response.sendRedirect("http://localhost:3000");
 		}
 	}
 	
