@@ -23,6 +23,11 @@ public class VipController {
 		return vipService.getAllVip();
 	}
 	
+	@PostMapping("/addNewVip")
+	public Vip addNewVip(@RequestBody Vip vip) {
+		return vipService.addNewVip(vip);
+	}
+	
 	@PostMapping("/findVipById")
 	public Vip findVipById(@RequestParam(value = "id", required = true) Long id) {
 		return vipService.findById(id);

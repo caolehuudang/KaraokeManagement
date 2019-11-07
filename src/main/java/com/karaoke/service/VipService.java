@@ -11,4 +11,6 @@ public interface VipService {
 	List<Vip> getAllVip();
 	
 	Vip updateVip(Vip vip);
+	
+	Vip addNewVip(Vip vip);
 }

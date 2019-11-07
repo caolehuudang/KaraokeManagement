@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.karaoke.common.Contants;
 import com.karaoke.dao.VipDao;
 import com.karaoke.model.Vip;
 import com.karaoke.service.VipService;
@@ -27,6 +28,7 @@ public class VipServiceImpl implements VipService{
 		vipOld.setLevel(vip.getLevel());
 		vipOld.setTotal(vip.getTotal());
 		vipOld.setPercentDiscount(vip.getPercentDiscount());
+		vipOld.setStatus(vip.getStatus());
 		
 		vipDao.save(vipOld);
 		return vipOld;
@@ -35,6 +37,12 @@ public class VipServiceImpl implements VipService{
 	@Override
 	public Vip findById(Long id) {
 		return vipDao.findById(id).get();
+	}
+
+	@Override
+	public Vip addNewVip(Vip vip) {
+		vip.setStatus(Contants.ACTIVE);
+		return vipDao.save(vip);
 	}
 
 }
