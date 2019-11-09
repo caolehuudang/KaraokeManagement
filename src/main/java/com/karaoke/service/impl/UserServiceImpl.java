@@ -50,10 +50,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User activeAccount(String username) {
 		User user = findByUsername(username);
-		user.setStatus(Contants.ACTIVE);
-		userDao.save(user);
+		if(user.getStatus().equals(Contants.DE_ACTIVE)) {
+			user.setStatus(Contants.ACTIVE);
+			userDao.save(user);
+			return user;
+		}else {
+			return null;
+		}
 		
-		return user;
 	}
 
 }

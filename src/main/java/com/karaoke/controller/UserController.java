@@ -50,7 +50,7 @@ public class UserController {
 		if(user != null) {
 			 response.sendRedirect("http://localhost:3000");
 		}else {
-			 response.sendRedirect("http://localhost:3000");
+			 response.sendRedirect("http://localhost:3000/notfound");
 		}
 	}
 	
