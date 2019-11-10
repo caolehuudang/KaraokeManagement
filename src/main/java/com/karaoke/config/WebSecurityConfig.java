@@ -71,9 +71,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			httpSecurity.csrf().disable().authorizeRequests()
 				.antMatchers("/customer","/getAllVip").hasAnyAuthority(Contants.ROLE_ADMIN, Contants.ROLE_CUSTOMER)
 
-				.antMatchers("/admin", "/getUserById", "/getAllUser", "/updateUser", "/addNewVip", "/updateVip", "/addNewCategory",
-						"/updateCategory", "/addNewRoom", "/updateRoom", "/addNewItem", "/updateItem", "/pay",
-						"/getTotalMonth" ).hasAuthority(Contants.ROLE_ADMIN)
+				.antMatchers("/admin", "/getUserById", "/getAllUser", "/addNewUser", "/updateUser", "/addNewVip",
+						"/updateVip", "/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
+						"/addNewItem", "/updateItem", "/pay", "/getTotalMonth" ).hasAuthority(Contants.ROLE_ADMIN)
 
 				.antMatchers("/", "/authenticate", "/register",  "/findVipById", "/getAllCategory", "/getAllRoom", "/changeStatusRoom",
 						"/getAllItem", "/getAllOrders", "/addNewOrder", "/updateOrder", "/getOrderByName",

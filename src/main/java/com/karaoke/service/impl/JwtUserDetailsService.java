@@ -57,7 +57,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	public User save(UserDTO user) throws MessagingException {
 		
 		User newUser = new User();
-		
+		newUser.setId(user.getId());
 		newUser.setUsername(user.getUsername().strip());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		newUser.setRole(("".equals(user.getRole()) ? Contants.ROLE_CUSTOMER : user.getRole() ));

@@ -15,4 +15,6 @@ public interface UserService {
 	List<User> getAllUser();
 	
 	User updateUser(User user);
+	
+	User addNewUser(User user);
 }

@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<User> getAllUser() {
-		// TODO Auto-generated method stub
 		return (List<User>) userDao.findAll();
 	}
 
@@ -58,6 +57,12 @@ public class UserServiceImpl implements UserService{
 			return null;
 		}
 		
+	}
+
+	@Override
+	public User addNewUser(User user) {
+		user.setUsername(user.getUsername().strip());
+		return userDao.save(user);
 	}
 
 }
