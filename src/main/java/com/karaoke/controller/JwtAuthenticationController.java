@@ -79,6 +79,25 @@ public class JwtAuthenticationController {
 		return userDto;
 	}
 	
+	@PostMapping("/findUserByToken")
+	public UserDTO findUserByToken(@RequestHeader(value = "Authorization") String authorization) {
+		
+		 UserDetails userDetails = userDetailsService
+					.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(authorization.substring(7)));
+		 
+		UserDTO userDto = new UserDTO();
+		User user = userDao.findByUsername(userDetails.getUsername());
+		userDto.setUsername(user.getUsername());
+		userDto.setFullName(user.getFullName());
+		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());
+		userDto.setId(user.getId());
+		userDto.setImage(user.getImage());
+		userDto.setVip(user.getVip().getLevel());
+		
+		return userDto;
+	}
+	
+	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
 		

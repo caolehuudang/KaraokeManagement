@@ -16,6 +16,10 @@ public class UserDTO {
 	
 	private String fullName;
 	
+	private String image;
+	
+	private String vip;
+	
 	public Long getId() {
 		return id;
 	}
@@ -72,4 +76,20 @@ public class UserDTO {
 		this.fullName = fullName;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getVip() {
+		return vip;
+	}
+
+	public void setVip(String vip) {
+		this.vip = vip;
+	}
+	
 }

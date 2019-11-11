@@ -69,7 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 			//httpSecurity.cors().and().authorizeRequests()
 			httpSecurity.csrf().disable().authorizeRequests()
-				.antMatchers("/customer","/getAllVip").hasAnyAuthority(Contants.ROLE_ADMIN, Contants.ROLE_CUSTOMER)
+				.antMatchers("/customer","/getAllVip","/findUserByToken")
+				.hasAnyAuthority(Contants.ROLE_ADMIN, Contants.ROLE_STAFF, Contants.ROLE_CUSTOMER)
 
 				.antMatchers("/admin", "/getUserById", "/getAllUser", "/addNewUser", "/updateUser", "/addNewVip",
 						"/updateVip", "/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",

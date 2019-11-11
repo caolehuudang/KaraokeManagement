@@ -7,12 +7,14 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.karaoke.bo.UserDTO;
 import com.karaoke.model.User;
@@ -72,4 +74,9 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping(value = "/uploadImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public User uploadFile(@RequestParam MultipartFile file, @RequestParam(value = "id") Long id) throws IOException {
+     
+        return userService.editImage(file, id); 
+    }
 }

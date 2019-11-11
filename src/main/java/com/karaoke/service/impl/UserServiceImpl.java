@@ -1,9 +1,13 @@
 package com.karaoke.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
@@ -65,4 +69,19 @@ public class UserServiceImpl implements UserService{
 		return userDao.save(user);
 	}
 
+	@Override
+	public User editImage(MultipartFile file, Long id) throws IOException {
+		User userOld = userDao.findById(id).get();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(file.getBytes(), false)));
+		
+        userOld.setImage(sb.toString());
+        
+        userDao.save(userOld);
+        
+		return userOld;
+	}
+	
 }
