@@ -8,6 +8,9 @@ public class UserDTO {
 	
 	private String password;
 	
+	//password new when update
+	private String passwordConfirm;
+	
 	private String role;
 	
 	private String email;
@@ -90,6 +93,14 @@ public class UserDTO {
 
 	public void setVip(String vip) {
 		this.vip = vip;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 	
 }

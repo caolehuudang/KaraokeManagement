@@ -89,6 +89,7 @@ public class JwtAuthenticationController {
 		User user = userDao.findByUsername(userDetails.getUsername());
 		userDto.setUsername(user.getUsername());
 		userDto.setFullName(user.getFullName());
+		userDto.setEmail(user.getEmail());
 		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());
 		userDto.setId(user.getId());
 		userDto.setImage(user.getImage());

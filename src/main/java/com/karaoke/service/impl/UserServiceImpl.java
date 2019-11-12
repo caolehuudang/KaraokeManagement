@@ -6,9 +6,13 @@ import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.karaoke.bo.UserDTO;
+import com.karaoke.bo.UserProfileMessage;
 import com.karaoke.common.Contants;
 import com.karaoke.dao.UserDao;
 import com.karaoke.model.User;
@@ -19,6 +23,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
 
 	@Override
 	public User findById(Long id) {
@@ -31,18 +38,27 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User updateUser(User user) {
+	public UserProfileMessage updateUser(UserDTO user) {
 		
 		User userOld = userDao.findById(user.getId()).get();
 		
-		userOld.setEmail(user.getEmail());
-		userOld.setStatus(user.getStatus());
-		userOld.setImage(user.getImage());
-		userOld.setVip(user.getVip());
+		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
 		
-		userDao.save(userOld);
-
-		return userOld;
+		Boolean valid = b.matches(user.getPassword(), userOld.getPassword());
+		
+		if(valid) {
+			userOld.setFullName(user.getFullName());
+			userOld.setEmail(user.getEmail());
+			userOld.setPassword(bcryptEncoder.encode(user.getPasswordConfirm()));
+			userOld.setImage(user.getImage());
+			userOld.setRole(user.getRole());
+			
+			userDao.save(userOld);
+			return new UserProfileMessage(Contants.SUCCESSFULLY, userOld);
+		}else {
+			return new UserProfileMessage(Contants.PASSWORD_INCORRECT, null);
+		}	
+		
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.karaoke.bo.UserDTO;
+import com.karaoke.bo.UserProfileMessage;
 import com.karaoke.model.User;
 
 public interface UserService {
@@ -17,7 +19,7 @@ public interface UserService {
 	
 	List<User> getAllUser();
 	
-	User updateUser(User user);
+	UserProfileMessage updateUser(UserDTO user);
 	
 	User addNewUser(User user);
 	

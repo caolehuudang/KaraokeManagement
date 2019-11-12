@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.karaoke.bo.UserDTO;
+import com.karaoke.bo.UserProfileMessage;
 import com.karaoke.model.User;
 import com.karaoke.service.SendMailSevice;
 import com.karaoke.service.UserService;
@@ -34,7 +35,7 @@ public class UserController {
 	
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
-
+	
 	@PostMapping("/getUserById")
 	public User findById(@RequestParam(value = "id", required = false) Long id) {
 		return userService.findById(id);
@@ -58,7 +59,7 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/updateUser", produces = "application/json; charset=UTF-8")
-	public User updateUser(@RequestBody User user) {
+	public UserProfileMessage updateUser(@RequestBody UserDTO user) {
 		return userService.updateUser(user);
 	}
 	
