@@ -1,9 +1,13 @@
 package com.karaoke.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.karaoke.common.Contants;
 import com.karaoke.dao.VipDao;
@@ -43,6 +47,22 @@ public class VipServiceImpl implements VipService{
 	public Vip addNewVip(Vip vip) {
 		vip.setStatus(Contants.ACTIVE);
 		return vipDao.save(vip);
+	}
+
+	@Override
+	public Vip updateImageVip(MultipartFile file, Long id) throws IOException {
+		
+		Vip vipOld = vipDao.findById(id).get();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(file.getBytes(), false)));
+		
+		vipOld.setImage(sb.toString());
+        
+        vipDao.save(vipOld);
+        
+		return vipOld;
 	}
 
 }

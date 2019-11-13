@@ -40,6 +40,9 @@ public class Vip implements Serializable{
 	@Column(name = "STATUS")
 	private String status;
 	
+	@Column(name = "IMAGE")
+	private String image;
+	
 	@OneToMany(mappedBy = "vip",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	@JsonIgnore
@@ -93,14 +96,26 @@ public class Vip implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 
-	public Vip(Long id, String level, Double total, int percentDiscount, String status, List<User> users) {
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	
+	public Vip(Long id, String level, Double total, int percentDiscount, String status, String image,
+			List<User> users) {
 		super();
 		this.id = id;
 		this.level = level;
 		this.total = total;
 		this.percentDiscount = percentDiscount;
 		this.status = status;
+		this.image = image;
 		this.users = users;
 	}
 

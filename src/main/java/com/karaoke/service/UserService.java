@@ -24,4 +24,9 @@ public interface UserService {
 	User addNewUser(User user);
 	
 	User editImage(MultipartFile file, Long id) throws IOException;
+	
+	UserProfileMessage updateUserForAdmin(UserDTO user); 
+	
+	List<User> search(String txtSearch);
+	
 }

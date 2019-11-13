@@ -29,6 +29,9 @@ public class Category {
 	@Column(name = "STATUS")
 	private String status;
 	
+	@Column(name = "IMAGE")
+	private String image;
+	
 	@OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	private List<Item> items;
@@ -65,11 +68,22 @@ public class Category {
 		this.items = items;
 	}
 
-	public Category(Long id, String name, String status, List<Item> items) {
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	
+	public Category(Long id, String name, String status, String image, List<Item> items) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.status = status;
+		this.image = image;
 		this.items = items;
 	}
 

@@ -93,7 +93,7 @@ public class JwtAuthenticationController {
 		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());
 		userDto.setId(user.getId());
 		userDto.setImage(user.getImage());
-		userDto.setVip(user.getVip().getLevel());
+		userDto.setVip(user.getVip());
 		
 		return userDto;
 	}

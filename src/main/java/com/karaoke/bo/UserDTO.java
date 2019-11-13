@@ -1,5 +1,7 @@
 package com.karaoke.bo;
 
+import com.karaoke.model.Vip;
+
 public class UserDTO {
 
 	private Long id;
@@ -21,7 +23,7 @@ public class UserDTO {
 	
 	private String image;
 	
-	private String vip;
+	private Vip vip;
 	
 	public Long getId() {
 		return id;
@@ -87,11 +89,12 @@ public class UserDTO {
 		this.image = image;
 	}
 
-	public String getVip() {
+
+	public Vip getVip() {
 		return vip;
 	}
 
-	public void setVip(String vip) {
+	public void setVip(Vip vip) {
 		this.vip = vip;
 	}
 

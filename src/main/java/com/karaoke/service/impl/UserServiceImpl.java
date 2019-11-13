@@ -99,5 +99,25 @@ public class UserServiceImpl implements UserService{
         
 		return userOld;
 	}
+
+	@Override
+	public UserProfileMessage updateUserForAdmin(UserDTO user) {
+		
+		User userOld = userDao.findById(user.getId()).get();
+		
+		userOld.setEmail(user.getEmail());
+		userOld.setFullName(user.getFullName());
+		userOld.setRole(user.getRole());
+		
+		userDao.save(userOld);
+		
+		return new UserProfileMessage(Contants.SUCCESSFULLY, userOld);
+	}
+
+	@Override
+	public List<User> search(String txtSearch) {
+		
+		return userDao.search(txtSearch);
+	}
 	
 }

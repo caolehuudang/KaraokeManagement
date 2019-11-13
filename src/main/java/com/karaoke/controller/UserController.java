@@ -63,6 +63,10 @@ public class UserController {
 		return userService.updateUser(user);
 	}
 	
+	@PostMapping(value = "/updateUserForAdmin", produces = "application/json; charset=UTF-8")
+	public UserProfileMessage updateUserForAdmin(@RequestBody UserDTO user) {
+		return userService.updateUserForAdmin(user);
+	}
 	
 	
 	@GetMapping("/confirm-account")
@@ -80,4 +84,9 @@ public class UserController {
      
         return userService.editImage(file, id); 
     }
+	
+	@PostMapping(value = "/search", produces = "application/json; charset=UTF-8")
+	public List<User> search(@RequestParam("txtSearch") String txtSearch){
+		return userService.search(txtSearch);
+	}
 }
