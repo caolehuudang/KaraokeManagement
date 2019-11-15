@@ -21,5 +21,7 @@ public interface Contants {
 	
 	public static final String PASSWORD_INCORRECT = "PASSWORD_INCORRECT";
 	
+	public static final String DUPLICATE_NAME = "DUPLICATE_NAME";
+	
 	
 }

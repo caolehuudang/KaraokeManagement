@@ -1,9 +1,13 @@
 package com.karaoke.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.karaoke.dao.CategoryDao;
 import com.karaoke.model.Category;
@@ -22,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public Category addNewCategory(Category category) {
+		category.setName(category.getName().strip());
 		return categoryDao.save(category);
 	}
 
@@ -29,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService{
 	public Category updateCategory(Category category) {
 		Category categotyOld = findCategoryById(category.getId());
 		
-		categotyOld.setName(category.getName());
+		categotyOld.setName(category.getName().strip());
 		categotyOld.setStatus(category.getStatus());
 		
 		categoryDao.save(categotyOld);
@@ -42,4 +47,30 @@ public class CategoryServiceImpl implements CategoryService{
 		return categoryDao.findAll();
 	}
 
+	@Override
+	public Boolean isDuplicateName(Category category) {
+		if(category.getId() == null) {
+			Category cate = categoryDao.findCategoryByName(category.getName().strip());
+			return cate != null;
+		}else {
+			List<Category> list = categoryDao.findCategoryDuplicate(category.getId(), category.getName().strip());
+			return list.size() > 0;
+		}
+	}
+	
+	@Override
+	public Category updateImageCategory(MultipartFile file, Long id) throws IOException {
+		
+		Category categoryOld = categoryDao.findById(id).get();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(StringUtils.newStringUtf8(Base64.encodeBase64(file.getBytes(), false)));
+		
+		categoryOld.setImage(sb.toString());
+        
+        categoryDao.save(categoryOld);
+        
+		return categoryOld;
+	}
 }
