@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -34,13 +33,15 @@ public class Item {
 	@Column(name = "PRICE")
 	private Double price;
 	
+	@Column(name = "IMAGE")
+	private String image;
+	
 	@Column(name = "STATUS")
 	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name = "FK_ID_CATEGORY")
-	@JsonBackReference
-	private Category category;
+	private Category category; 
 
 	@OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
@@ -70,6 +71,14 @@ public class Item {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public String getStatus() {
 		return status;
@@ -97,11 +106,13 @@ public class Item {
 	}
 
 	
-	public Item(Long id, String name, Double price, String status, Category category, List<OrderItem> orderItems) {
+	public Item(Long id, String name, Double price, String image, String status, Category category,
+			List<OrderItem> orderItems) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.image = image;
 		this.status = status;
 		this.category = category;
 		this.orderItems = orderItems;

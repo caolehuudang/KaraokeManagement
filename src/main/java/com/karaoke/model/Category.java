@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "T_CATEGORY")
 public class Category {
@@ -34,6 +36,7 @@ public class Category {
 	
 	@OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
+	@JsonIgnore
 	private List<Item> items;
 
 	public Long getId() {

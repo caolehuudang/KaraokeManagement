@@ -50,7 +50,7 @@ public class CategoryController {
 	}
 	
 	@PostMapping(value = "/updateImageCategory", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public Category updateImageVip(@RequestParam MultipartFile file, @RequestParam(value = "id") Long id) throws IOException {
+	public Category updateImageItem(@RequestParam MultipartFile file, @RequestParam(value = "id") Long id) throws IOException {
         return categoryService.updateImageCategory(file, id); 
     }
 	
