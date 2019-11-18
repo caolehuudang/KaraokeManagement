@@ -25,8 +25,8 @@ public class Room {
 	@Column(name = "PK_ID")
     private Long id;
 	
-	@Column(name = "NUMBER_ROOM")
-	private int number;
+	@Column(name = "ROOM_NAME")
+	private String name;
 	
 	@Column(name = "CAPACITY")
 	private int capacity;
@@ -37,13 +37,14 @@ public class Room {
 	@Column(name = "PRICE")
 	private Double price;
 	
-	@Column(name = "IMAGE")
-	private String image;
-	
 	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	@JsonIgnore
 	private List<Order> orders;
+	
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	private List<RoomImage> roomImages;
 
 	public Long getId() {
 		return id;
@@ -51,14 +52,6 @@ public class Room {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
 	}
 
 	public int getCapacity() {
@@ -85,12 +78,13 @@ public class Room {
 		this.price = price;
 	}
 
-	public String getImage() {
-		return image;
+
+	public String getName() {
+		return name;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<Order> getOrders() {
@@ -99,6 +93,28 @@ public class Room {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+	
+
+	public List<RoomImage> getRoomImages() {
+		return roomImages;
+	}
+
+	public void setRoomImages(List<RoomImage> roomImages) {
+		this.roomImages = roomImages;
+	}
+	
+
+	public Room(Long id, String name, int capacity, String status, Double price, List<Order> orders,
+			List<RoomImage> roomImages) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.capacity = capacity;
+		this.status = status;
+		this.price = price; 
+		this.orders = orders;
+		this.roomImages = roomImages;
 	}
 
 	public Room() {

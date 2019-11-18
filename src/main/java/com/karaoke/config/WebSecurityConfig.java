@@ -75,8 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/admin", "/getUserById", "/getAllUser", "/addNewUser", "/updateUser", "/addNewVip",
 						"/updateVip", "/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
 						"/addNewItem", "/updateItem", "/pay", "/getTotalMonth",
-						"/updateUserForAdmin", "/updateImageVip", "/search", "/updateImageCategory"
-						).hasAuthority(Contants.ROLE_ADMIN)
+						"/updateUserForAdmin", "/updateImageVip", "/search", "/updateImageCategory",
+						"/updateImageItem","/uploadImageRoom").hasAuthority(Contants.ROLE_ADMIN)
 
 				.antMatchers("/", "/authenticate", "/register",  "/findVipById", "/getAllCategory", "/getAllRoom", "/changeStatusRoom",
 						"/getAllItem", "/getAllOrders", "/addNewOrder", "/updateOrder", "/getOrderByName",
