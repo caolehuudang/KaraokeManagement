@@ -42,7 +42,7 @@ public class Room {
 	@JsonIgnore
 	private List<Order> orders;
 	
-	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY, orphanRemoval = true)
 	@Cascade(CascadeType.ALL)
 	private List<RoomImage> roomImages;
 

@@ -118,6 +118,12 @@ public class RoomServiceImpl implements RoomService{
 	   roomOld.getRoomImages().addAll(roomImageNew);
 	   
 	   roomDao.save(roomOld);
+	   
+	   if(roomOld.getRoomImages().size() > 0) {
+		   roomOld.getRoomImages().forEach(item ->{
+			   item.setRoom(null);
+		   });
+	   }
 		
 	   return roomOld;
 	}

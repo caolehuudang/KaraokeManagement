@@ -57,7 +57,7 @@ public class RoomController {
 	
    @PostMapping(value = "/uploadImageRoom", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
    public Room uploadFile(@RequestParam("files") MultipartFile[] files, @RequestParam(value = "id") Long id) throws IOException {
-       
+       	
         return roomService.uploadImageRoom(files, id);
     }
 	
