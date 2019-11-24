@@ -60,7 +60,7 @@ public class JwtAuthenticationController {
 
 		return ResponseEntity.ok(new JwtResponse(token, 
 				userDetails.getAuthorities().iterator().next().toString(),
-				user.getFullName()));
+				user.getFullName(), user.getId()));
 	}
 	
 	@CrossOrigin
@@ -72,6 +72,7 @@ public class JwtAuthenticationController {
 		 
 		UserDTO userDto = new UserDTO();
 		User user = userDao.findByUsername(userDetails.getUsername());
+		userDto.setId(user.getId());
 		userDto.setUsername(user.getUsername());
 		userDto.setFullName(user.getFullName());
 		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());

@@ -6,6 +6,8 @@ public class JwtResponse implements Serializable {
 
 	private static final long serialVersionUID = -8091879091924046844L;
 	
+	private Long id;
+	
 	private final String token;
 	
 	private String role;
@@ -36,6 +38,15 @@ public class JwtResponse implements Serializable {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public JwtResponse(String token, String role) {
 		super();
@@ -43,8 +54,9 @@ public class JwtResponse implements Serializable {
 		this.role = role;
 	}
 	
-	public JwtResponse(String token, String role, String fullname) {
+	public JwtResponse(String token, String role, String fullname, Long id) {
 		super();
+		this.id = id;
 		this.token = token;
 		this.role = role;
 		this.fullname = fullname;
