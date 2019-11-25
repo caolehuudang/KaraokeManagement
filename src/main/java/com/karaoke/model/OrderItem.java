@@ -18,6 +18,9 @@ public class OrderItem {
 	@Column(name = "PK_ID")
     private Long id;
 	
+	@Column(name = "QUANTITY")
+	private int quantity;
+	
 	@ManyToOne
 	@JoinColumn(name = "FK_ID_ORDER")
 	private Order order;
@@ -48,6 +51,15 @@ public class OrderItem {
 
 	public void setItem(Item item) {
 		this.item = item;
+	}
+
+	
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public OrderItem(Long id, Order order, Item item) {

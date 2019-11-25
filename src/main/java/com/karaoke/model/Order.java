@@ -39,6 +39,9 @@ public class Order implements Serializable{
 	@Column(name = "NAME")
 	private String name;
 	
+	@Column(name = "NUMBER_PHONE")
+	private String phone;
+	
 	@Column(name = "TOTAL_PRICE")
 	private Double totalPrice;
 	
@@ -130,6 +133,14 @@ public class Order implements Serializable{
 		this.orderItems = orderItems;
 	}
 
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
 	public Order(Long id, Timestamp start, Timestamp end, String name, Double totalPrice, String status, User user,
 			Room room, List<OrderItem> orderItems) {
