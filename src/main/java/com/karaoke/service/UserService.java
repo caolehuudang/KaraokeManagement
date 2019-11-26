@@ -29,4 +29,6 @@ public interface UserService {
 	
 	List<User> search(String txtSearch);
 	
+	Boolean isDuplicatePhone(UserDTO user);
+	
 }

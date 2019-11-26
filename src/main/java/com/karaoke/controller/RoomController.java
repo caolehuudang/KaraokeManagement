@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,11 @@ public class RoomController {
 		return roomService.getAllRoom();
 	}
 	
+	@MessageMapping("/realTime/Room")
+	@SendTo("/topic/public")
+	public String sendMessage() {
+		return "asdfghjkl;";
+	} 
 	
 	@PostMapping(value = "/addNewRoom", produces = "application/json; charset=UTF-8")
 	public ResponseMessage<Room> addNewRoom(@RequestBody Room room) {

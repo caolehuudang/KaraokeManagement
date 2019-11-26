@@ -63,6 +63,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setRole(("".equals(user.getRole()) ? Contants.ROLE_CUSTOMER : user.getRole() ));
 		newUser.setEmail(user.getEmail());
 		newUser.setFullName(user.getFullName());
+		newUser.setPhone(user.getPhone().strip());
 		
 		sendMailSevice.sendEmail(user.getEmail(), "", user.getFullName(), user.getUsername());
 		

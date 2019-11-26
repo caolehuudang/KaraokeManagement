@@ -30,6 +30,9 @@ public class User implements Serializable{
 	@Column(name="FULLNAME")
 	private String fullName;
 
+	@Column(name = "PHONE")
+	private String phone;
+	
 	@Column(name = "IMAGE")
 	private String image;
 
@@ -113,6 +116,15 @@ public class User implements Serializable{
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public User(Long id, String username, String password, String email, String fullName, String image, String status,

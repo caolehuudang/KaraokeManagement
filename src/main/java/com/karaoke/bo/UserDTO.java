@@ -21,6 +21,8 @@ public class UserDTO {
 	
 	private String fullName;
 	
+	private String phone;
+	
 	private String image;
 	
 	private Vip vip;
@@ -104,6 +106,14 @@ public class UserDTO {
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 }

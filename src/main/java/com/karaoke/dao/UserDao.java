@@ -14,6 +14,11 @@ public interface UserDao extends CrudRepository<User, Long> {
 	
 	User findByUsername(String username);
 	
+	User findUserByPhone(String phone);
+	
+	@Query("SELECT u FROM User u WHERE u.id <> :id AND u.phone =:phone")
+	User findUserDuplicatePhone(@Param("id") Long id ,@Param("phone") String phone);
+	
 	@Query("SELECT u FROM User u WHERE u.fullName LIKE %:txtSearch% OR u.username LIKE %:txtSearch%")
 	List<User> search(@Param("txtSearch") String txtSearch);
 	

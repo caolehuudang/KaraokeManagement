@@ -75,6 +75,7 @@ public class JwtAuthenticationController {
 		userDto.setId(user.getId());
 		userDto.setUsername(user.getUsername());
 		userDto.setFullName(user.getFullName());
+		userDto.setPhone(user.getPhone());
 		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());
 		
 		return userDto;
@@ -90,6 +91,7 @@ public class JwtAuthenticationController {
 		User user = userDao.findByUsername(userDetails.getUsername());
 		userDto.setUsername(user.getUsername());
 		userDto.setFullName(user.getFullName());
+		userDto.setPhone(user.getPhone());
 		userDto.setEmail(user.getEmail());
 		userDto.setRole(userDetails.getAuthorities().iterator().next().toString());
 		userDto.setId(user.getId());
@@ -105,8 +107,12 @@ public class JwtAuthenticationController {
 		
 		User userExist = userDao.findByUsername(user.getUsername().strip());
 		
+		User phoneExist = userDao.findUserByPhone(user.getPhone().strip());
+		
 		if(userExist != null) {
 			return ResponseEntity.ok(Contants.USER_EXISTED);
+		}else if(phoneExist != null){
+			return ResponseEntity.ok("PHONE_EXIST");
 		}else {
 			return ResponseEntity.ok(userDetailsService.save(user));
 		}

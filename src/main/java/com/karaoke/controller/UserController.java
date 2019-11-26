@@ -52,7 +52,11 @@ public class UserController {
 		User userExist = userService.findByUsername(user.getUsername().strip());
 		
 		if(userExist == null) {
-			return userDetailsService.save(user);
+			if(userService.isDuplicatePhone(user)) {
+				return null;
+			}else {
+				return userDetailsService.save(user);
+			}
 		}else {
 			return null;
 		}	
@@ -60,12 +64,23 @@ public class UserController {
 	
 	@PostMapping(value = "/updateUser", produces = "application/json; charset=UTF-8")
 	public UserProfileMessage updateUser(@RequestBody UserDTO user) {
-		return userService.updateUser(user);
+		
+		if(userService.isDuplicatePhone(user)) {
+			return null;
+		}else {
+			return userService.updateUser(user);
+		}
+		
 	}
 	
 	@PostMapping(value = "/updateUserForAdmin", produces = "application/json; charset=UTF-8")
 	public UserProfileMessage updateUserForAdmin(@RequestBody UserDTO user) {
-		return userService.updateUserForAdmin(user);
+		if(userService.isDuplicatePhone(user)) {
+			return null;
+		}else {
+			return userService.updateUserForAdmin(user);
+		}
+		
 	}
 	
 	

@@ -82,6 +82,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User addNewUser(User user) {
 		user.setUsername(user.getUsername().strip());
+		user.setPhone(user.getPhone().strip());
 		return userDao.save(user);
 	}
 
@@ -107,6 +108,7 @@ public class UserServiceImpl implements UserService{
 		
 		userOld.setEmail(user.getEmail());
 		userOld.setFullName(user.getFullName());
+		userOld.setPhone(user.getPhone().strip());
 		userOld.setRole(user.getRole());
 		
 		userDao.save(userOld);
@@ -116,8 +118,18 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<User> search(String txtSearch) {
-		
 		return userDao.search(txtSearch);
+	}
+
+	@Override
+	public Boolean isDuplicatePhone(UserDTO user) {
+		if(user.getId() == null) {
+			User u = userDao.findUserByPhone(user.getPhone().strip());
+			return u != null;
+		}else {
+			User u1 = userDao.findUserDuplicatePhone(user.getId(), user.getPhone().strip());
+			return u1 != null;
+		}
 	}
 	
 }
