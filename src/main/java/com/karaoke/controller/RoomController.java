@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.karaoke.bo.ChangeStatusRoom;
 import com.karaoke.bo.ResponseMessage;
 import com.karaoke.common.Contants;
 import com.karaoke.model.Room;
@@ -32,8 +34,9 @@ public class RoomController {
 	
 	@MessageMapping("/realTime/Room")
 	@SendTo("/topic/public")
-	public String sendMessage() {
-		return "asdfghjkl;";
+	@ResponseBody 
+	public ChangeStatusRoom sendMessage(@RequestBody ChangeStatusRoom changeStatusRoom) {
+		return changeStatusRoom;
 	} 
 	
 	@PostMapping(value = "/addNewRoom", produces = "application/json; charset=UTF-8")

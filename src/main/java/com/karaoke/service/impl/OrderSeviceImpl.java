@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.karaoke.bo.TotalMoneyInMonth;
 import com.karaoke.common.Contants;
 import com.karaoke.dao.OrderDao;
+import com.karaoke.dao.RoomDao;
 import com.karaoke.dao.UserDao;
 import com.karaoke.dao.VipDao;
 import com.karaoke.model.Order;
+import com.karaoke.model.Room;
 import com.karaoke.model.User;
 import com.karaoke.model.Vip;
 import com.karaoke.service.OrderService;
@@ -27,6 +29,9 @@ public class OrderSeviceImpl implements OrderService {
 
 	@Autowired
 	VipDao vipDao;
+	
+	@Autowired
+	RoomDao roomDao;
 
 	@Override
 	public List<Order> getAllOrder() {
@@ -47,6 +52,10 @@ public class OrderSeviceImpl implements OrderService {
 
 	@Override
 	public Order addNewOrder(Order order) {
+		Room room = roomDao.findById(order.getRoom().getId()).get();
+		room.setStatus(Contants.DE_ACTIVE);
+		roomDao.save(room);
+		order.getRoom().setStatus(Contants.DE_ACTIVE); 
 		return orderDao.save(order);
 	}
 

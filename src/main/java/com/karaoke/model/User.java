@@ -45,6 +45,9 @@ public class User implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "FK_VIP_ID")
 	private Vip vip;
+	
+	@Column(name = "TOTAL_PRICE")
+	private String totalPrice;
 
 	public Long getId() {
 		return id;
@@ -127,18 +130,29 @@ public class User implements Serializable{
 		this.phone = phone;
 	}
 
-	public User(Long id, String username, String password, String email, String fullName, String image, String status,
-			String role, Vip vip) {
+
+	public String getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public User(Long id, String username, String password, String email, String fullName, String phone, String image,
+			String status, String role, Vip vip, String totalPrice) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
+		this.phone = phone;
 		this.image = image;
 		this.status = status;
 		this.role = role;
 		this.vip = vip;
+		this.totalPrice = totalPrice;
 	}
 
 	public User() {
