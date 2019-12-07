@@ -253,6 +253,59 @@ public class OrderSeviceImpl implements OrderService {
 
 		return o;
 	}
+
+	@Override
+	public Order payment(Order order) {
+		
+		Order orderOld = orderDao.findById(order.getId()).get();
+		
+		orderOld.setEnd(order.getEnd());
+		orderOld.setTotalPrice(order.getTotalPrice());
+		orderOld.setUser(order.getUser());
+		orderOld.setName(order.getName());
+		orderOld.setStatus(Contants.DE_ACTIVE);
+		orderOld.setPhone(order.getPhone());
+		
+		Room room = roomDao.findById(order.getRoom().getId()).get();
+		
+		room.setStatus(Contants.ACTIVE);
+		roomDao.save(room);
+		
+		User user = userDao.findById(order.getId()).get();
+		
+		List<Vip> listVip = vipDao.findAllByOrderByTotalAsc();
+		
+		if(null != user) {
+			Double b = Double.valueOf(user.getTotalPrice()) + order.getTotalPrice();
+			
+			user.setTotalPrice(b.toString());
+			
+			int j = 0;
+
+			for (int i = 0; i < listVip.size(); i++) {
+
+				if (b.intValue() >= listVip.get(i).getTotal().intValue()) {
+					j = i;
+					if (i == listVip.size() - 1) {
+						//msg = listVip.get(j).getLevel();
+						user.setVip(listVip.get(j));
+					}
+					continue;
+				} else {
+					if (i < 1) {
+						break;
+					} else {
+						//msg = listVip.get(j).getLevel();
+						user.setVip(listVip.get(j));
+					}
+				}
+			}
+			
+			userDao.save(user);
+		}
+		
+		return orderDao.save(orderOld);
+	}
 	
 
 }

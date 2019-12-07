@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -134,8 +135,10 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User findUserByPhone(String phone) {
-		// TODO Auto-generated method stub
-		return userDao.findUserByPhone(phone);
+		User u = userDao.findUserByPhone(phone);
+		
+		Hibernate.initialize(u.getVip());
+		return u;
 	}
 	
 }

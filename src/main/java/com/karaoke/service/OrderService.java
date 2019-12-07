@@ -37,4 +37,6 @@ public interface OrderService {
 	
 	Order addNewOrderItem(Order order);
 	
+	Order payment(Order order);
+	
 }
