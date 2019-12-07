@@ -3,6 +3,8 @@ package com.karaoke.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.karaoke.model.Order;
@@ -17,5 +19,9 @@ public interface OrderDao extends JpaRepository<Order, Long>{
 	Order getOrderByUserIdAndStatus(Long id, String status);
 	
 	List<Order> getAllOrderByUserId(Long id);
+	
+	@Query("SELECT order FROM Order order WHERE order.room.id =:id AND order.status =:status")
+	Order getOrderByRoom(@Param("id") Long id ,@Param("status") String status);
+	
 	
 }

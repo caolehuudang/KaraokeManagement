@@ -33,4 +33,8 @@ public interface OrderService {
 	
 	void upLevelCustomer(Long id);
 	
+	Order getOrderByRoom(Long id , String status);
+	
+	Order addNewOrderItem(Order order);
+	
 }

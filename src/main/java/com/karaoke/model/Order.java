@@ -56,7 +56,7 @@ public class Order implements Serializable{
 	@JoinColumn(name = "FK_ID_ROOM")
 	private Room room;
 	
-	@OneToMany(mappedBy = "order",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "order",fetch = FetchType.LAZY, orphanRemoval = true)
 	@Cascade(CascadeType.ALL)
 	public List<OrderItem> orderItems;
 	

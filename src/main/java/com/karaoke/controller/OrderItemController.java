@@ -22,12 +22,12 @@ public class OrderItemController {
 		return orderItemService.getAllOrderItem();
 	}
 	
-	@PostMapping(value = "/addNewOrderItem", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/addNewOrderItem1", produces = "application/json; charset=UTF-8")
 	public OrderItem addNewOrderItem(@RequestBody OrderItem orderItem) {
 		return orderItemService.addNewOrderItem(orderItem);
 	}
 	
-	@PostMapping(value = "/updateOrderItem", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/updateOrderItem1", produces = "application/json; charset=UTF-8")
 	public OrderItem updateOrderItem(@RequestBody OrderItem orderItem) {
 		return orderItemService.updateOrderItem(orderItem);
 	}

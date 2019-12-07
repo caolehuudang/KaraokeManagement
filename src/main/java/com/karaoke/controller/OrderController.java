@@ -49,4 +49,16 @@ public class OrderController {
 		return orderService.pay(order);
 	}
 	
-}
+	@PostMapping(value = "/getOrderByRoom", produces = "application/json; charset=UTF-8") 
+	public Order getOrderByRoom(@RequestBody Order order) {
+		 
+		return orderService.getOrderByRoom(order.getRoom().getId(), order.getStatus());
+	}
+	
+	@PostMapping(value = "/addNewOrderItem", produces = "application/json; charset=UTF-8") 
+	public Order addNewOrderItem(@RequestBody Order order) {
+		 
+		return orderService.addNewOrderItem(order);
+	}
+	
+}  

@@ -13,6 +13,7 @@ import com.karaoke.dao.RoomDao;
 import com.karaoke.dao.UserDao;
 import com.karaoke.dao.VipDao;
 import com.karaoke.model.Order;
+import com.karaoke.model.OrderItem;
 import com.karaoke.model.Room;
 import com.karaoke.model.User;
 import com.karaoke.model.Vip;
@@ -203,5 +204,55 @@ public class OrderSeviceImpl implements OrderService {
 
 		userDao.save(user);
 	}
+
+	@Override
+	public Order getOrderByRoom(Long id, String status) { 
+		
+		Order order = orderDao.getOrderByRoom(id, status);
+		
+		order.setRoom(null);
+		
+		order.getOrderItems().forEach(item ->{
+			item.setOrder(null);
+		});
+		 
+		return order;
+	}
+
+	@Override
+	public Order addNewOrderItem(Order order) {
+		
+		Order orderOld = orderDao.findById(order.getId()).get();
+		
+		List<OrderItem> listOrderItem = new ArrayList<OrderItem>();
+		
+		List<OrderItem> listRemove = new ArrayList<OrderItem>();
+		
+		orderOld.getOrderItems().forEach(item ->{
+			item.setOrder(null);
+			listRemove.add(item);
+		});
+
+		
+		order.getOrderItems().forEach(item -> {
+			item.setOrder(order);
+			listOrderItem.add(item);
+		});
+		
+		orderOld.getOrderItems().removeAll(listRemove);
+		
+		orderOld.getOrderItems().addAll(listOrderItem);
+		
+		Order o = orderDao.save(orderOld);
+		
+		o.setRoom(null);
+		o.getOrderItems().forEach(item -> {
+			item.setOrder(null);
+			
+		});
+
+		return o;
+	}
+	
 
 }
