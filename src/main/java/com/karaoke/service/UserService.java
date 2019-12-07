@@ -31,4 +31,6 @@ public interface UserService {
 	
 	Boolean isDuplicatePhone(UserDTO user);
 	
+	User findUserByPhone(String phone);
+	
 }

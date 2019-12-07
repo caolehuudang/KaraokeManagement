@@ -104,4 +104,10 @@ public class UserController {
 	public List<User> search(@RequestParam("txtSearch") String txtSearch){
 		return userService.search(txtSearch);
 	}
+	
+	@PostMapping(value = "/findUserByPhone", produces = "application/json; charset=UTF-8")
+	public User findUserByPhone(@RequestBody UserDTO user) {
+		
+		return userService.findUserByPhone(user.getPhone());
+	} 
 }
