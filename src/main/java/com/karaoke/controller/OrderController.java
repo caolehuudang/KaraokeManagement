@@ -64,7 +64,7 @@ public class OrderController {
 	@PostMapping(value = "/payment", produces = "application/json; charset=UTF-8") 
 	public Order payment(@RequestBody Order order) {
 		 
-		return null;
+		return orderService.payment(order);
 	}
 	
 }  

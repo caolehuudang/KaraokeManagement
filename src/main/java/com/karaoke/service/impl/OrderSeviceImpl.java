@@ -210,12 +210,15 @@ public class OrderSeviceImpl implements OrderService {
 		
 		Order order = orderDao.getOrderByRoom(id, status);
 		
-		order.setRoom(null);
+		if (order != null) {
+			
+			order.setRoom(null);
+			
+			order.getOrderItems().forEach(item ->{
+				item.setOrder(null);
+			});
+		}
 		
-		order.getOrderItems().forEach(item ->{
-			item.setOrder(null);
-		});
-		 
 		return order;
 	}
 
@@ -271,12 +274,17 @@ public class OrderSeviceImpl implements OrderService {
 		room.setStatus(Contants.ACTIVE);
 		roomDao.save(room);
 		
-		User user = userDao.findById(order.getId()).get();
+		User user = null;
+		
+		if(order.getUser() != null) {
+			 user = userDao.findById(order.getUser().getId()).get();
+		}
+		
 		
 		List<Vip> listVip = vipDao.findAllByOrderByTotalAsc();
 		
 		if(null != user) {
-			Double b = Double.valueOf(user.getTotalPrice()) + order.getTotalPrice();
+			Double b = (user.getTotalPrice() != null ? Double.valueOf(user.getTotalPrice()) : 0.0) + order.getTotalPrice();
 			
 			user.setTotalPrice(b.toString());
 			
@@ -287,7 +295,6 @@ public class OrderSeviceImpl implements OrderService {
 				if (b.intValue() >= listVip.get(i).getTotal().intValue()) {
 					j = i;
 					if (i == listVip.size() - 1) {
-						//msg = listVip.get(j).getLevel();
 						user.setVip(listVip.get(j));
 					}
 					continue;
@@ -295,7 +302,6 @@ public class OrderSeviceImpl implements OrderService {
 					if (i < 1) {
 						break;
 					} else {
-						//msg = listVip.get(j).getLevel();
 						user.setVip(listVip.get(j));
 					}
 				}
@@ -303,8 +309,19 @@ public class OrderSeviceImpl implements OrderService {
 			
 			userDao.save(user);
 		}
+		Order o = orderDao.save(orderOld);
 		
-		return orderDao.save(orderOld);
+		o.getRoom().getRoomImages().forEach(item -> {
+			item.setRoom(null);
+		});
+		
+		o.getOrderItems().forEach(item -> {
+			item.setOrder(null);
+			
+		});
+
+		return o;
+		
 	}
 	
 

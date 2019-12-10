@@ -72,7 +72,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/customer","/getAllVip","/findUserByToken", "/getOrderByRoom", "/addNewOrderItem",
 						"/findUserByPhone")
 				.hasAnyAuthority(Contants.ROLE_ADMIN, Contants.ROLE_STAFF, Contants.ROLE_CUSTOMER, Contants.ROLE_CASHIER)
-
+				
+				.antMatchers("/payment").hasAnyAuthority(Contants.ROLE_ADMIN, Contants.ROLE_CASHIER)
+				
 				.antMatchers("/admin", "/getUserById", "/getAllUser", "/addNewUser", "/updateUser", "/addNewVip",
 						"/updateVip", "/addNewCategory", "/updateCategory", "/addNewRoom", "/updateRoom",
 						"/addNewItem", "/updateItem", "/pay", "/getTotalMonth",
