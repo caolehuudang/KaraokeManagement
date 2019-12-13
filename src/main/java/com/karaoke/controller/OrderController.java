@@ -1,5 +1,6 @@
 package com.karaoke.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,12 @@ public class OrderController {
 	public Order payment(@RequestBody Order order) {
 		 
 		return orderService.payment(order);
+	}
+	
+	@GetMapping(value = "/getTotalPriceYear", produces = "application/json; charset=UTF-8") 
+	public List<String> getTotalPriceYear() {
+		Date date = new Date();
+		return orderService.getTotalPriceYear(date.getYear());
 	}
 	
 }  

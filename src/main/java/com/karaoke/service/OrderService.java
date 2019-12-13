@@ -39,4 +39,6 @@ public interface OrderService {
 	
 	Order payment(Order order);
 	
+	List<String> getTotalPriceYear(int year);
+	
 }

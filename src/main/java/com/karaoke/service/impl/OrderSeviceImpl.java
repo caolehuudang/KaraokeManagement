@@ -1,7 +1,9 @@
 package com.karaoke.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -322,6 +324,44 @@ public class OrderSeviceImpl implements OrderService {
 
 		return o;
 		
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<String> getTotalPriceYear(int year) {
+		
+		List<Order> listOrder = orderDao.findAll();
+		
+		List<String> totalPrice = new ArrayList<String>();
+	
+		Map<Integer, Long> total = new HashMap<Integer, Long>();
+		total.put(0, 0L);
+		total.put(1, 0L);
+		total.put(2, 0L);
+		total.put(3, 0L);
+		total.put(4, 0L);
+		total.put(5, 0L);
+		total.put(6, 0L);
+		total.put(7, 0L);
+		total.put(8, 0L);
+		total.put(9, 0L);
+		total.put(10, 0L);
+		total.put(11, 0L);
+		
+		listOrder.forEach(item -> {
+			if(null != item.getEnd()) {
+				var key = item.getEnd().getMonth();
+				Long sum = (long) (total.get(key) + item.getTotalPrice());
+				total.replace(key, sum);
+			}
+		});
+		
+		
+		for(int i=0; i < 12; i ++) {
+			totalPrice.add(total.get(i) + "");
+		}
+		
+		return totalPrice;
 	}
 	
 
