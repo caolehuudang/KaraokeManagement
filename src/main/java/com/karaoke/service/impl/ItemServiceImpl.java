@@ -43,7 +43,7 @@ public class ItemServiceImpl implements ItemService {
 		itemOld.setName(item.getName().strip());
 		itemOld.setPrice(item.getPrice());
 		itemOld.setCategory(item.getCategory());
-		
+		itemOld.setStatus(item.getStatus());
 		itemDao.save(itemOld);
 		
 		return itemOld;

@@ -88,8 +88,6 @@ public class OrderSeviceImpl implements OrderService {
 	public TotalMoneyInMonth getTotalMonth(int month) {
 		List<Order> list = orderDao.findAll();
 		TotalMoneyInMonth totalInMonth = new TotalMoneyInMonth();
-		// Order or = list.stream().filter(item-> (8 ==
-		// item.getStart().getHours())).findAny().orElse(null);
 		Double total = 0.0;
 		for (Order or : list) {
 			if (or.getStart().getMonth() + 1 == 10) {
@@ -190,7 +188,6 @@ public class OrderSeviceImpl implements OrderService {
 			if (totalMoney.intValue() >= listVip.get(i).getTotal().intValue()) {
 				j = i;
 				if (i == listVip.size() - 1) {
-					//msg = listVip.get(j).getLevel();
 					user.setVip(listVip.get(j));
 				}
 				continue;
@@ -198,7 +195,6 @@ public class OrderSeviceImpl implements OrderService {
 				if (i < 1) {
 					break;
 				} else {
-					//msg = listVip.get(j).getLevel();
 					user.setVip(listVip.get(j));
 				}
 			}

@@ -137,7 +137,10 @@ public class UserServiceImpl implements UserService{
 	public User findUserByPhone(String phone) {
 		User u = userDao.findUserByPhone(phone);
 		
-		Hibernate.initialize(u.getVip());
+		if(u != null) {
+			Hibernate.initialize(u.getVip());
+		}
+		
 		return u;
 	}
 	
